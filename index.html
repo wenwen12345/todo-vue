@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <title></title>
+        <!-- <script src="https://unpkg.com/vue@next"></script> -->
+        <script src="js/v3.2.8/vue.global.prod.js" type="text/javascript" charset="utf-8"></script>
+        <link href="css/bootstrap/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    </head>
+    <body>
+        <div id="app">
+            <ol>
+                <li v-for="todo in todos">
+                    <button v-on:click="del(todo)" class="btn btn-default">	&#10005</button>
+                    {{ todo.text }}
+                </li>
+            </ol>
+            <div id="from-group">
+                <input v-model="input" class="form-control" id="input" />
+            </div>
+            <button v-on:click="send" class="btn btn-default btn-lg active">send</button>
+        </div>
+        <script>
+            const App = {
+                data() {
+                    Array.prototype.indexOf = function(val) {
+                        for (var i = 0; i < this.length; i++) {
+                            if (this[i] == val) return i;
+                        }
+                        return -1;
+                    };
+                    Array.prototype.remove = function(val) {
+                        var index = this.indexOf(val);
+                        if (index > -1) {
+                            this.splice(index, 1);
+                        }
+                    };
+                    return {
+                        todos: [{
+                        }],
+                    }
+                },
+                methods: {
+                    send() {
+                        this.todos.push({
+                            text: this.input
+                        })
+                        this.input = ''
+                    },
+                    del(todo) {
+                        this.todos.remove(todo)
+                    }
+                }
+            };
+            Vue.createApp(App).mount('#app');
+        </script>
+    </body>
+</html>
